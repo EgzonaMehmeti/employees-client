@@ -41,7 +41,6 @@ export class EmployeeListComponent implements OnInit {
   loadEmployees(search?: string, department?: string, page: number = 1, pageSize: number = 10) {
     this.employeeService.getEmployees(search, department, page, pageSize).subscribe(res => {
       this.dataSource.data = res.items; // assuming paged result has `items` array
-      console.log(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -49,7 +48,6 @@ export class EmployeeListComponent implements OnInit {
   loadDepartments() {
     this.employeeService.getDepartments().subscribe(res => {
       this.departmentsList = res.items; // assuming paged result has `items` array
-      console.log(res);
     });
   }
 
@@ -102,7 +100,6 @@ export class EmployeeListComponent implements OnInit {
       data: dataForDialog
     });
     dialogRef.afterClosed().subscribe(res => {
-      console.log('res',res);
       if(res){
         if(type == 'edit'){
           this.employeeService.updateEmployee(employeeId, res.data).subscribe(res1=>{
@@ -118,7 +115,6 @@ export class EmployeeListComponent implements OnInit {
   }
   public deleteEmployee(employee: Employee){
     this.employeeService.deleteEmployee(employee.id).subscribe(res1=>{
-          console.log(res1);
           this.loadEmployees();
         });
   }
