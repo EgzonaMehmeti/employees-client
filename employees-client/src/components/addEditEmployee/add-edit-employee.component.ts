@@ -20,7 +20,14 @@ export class AddEditEmployeeComponent implements OnInit{
                }
     
     ngOnInit(): void {
-        this.form = this.data.type == 'edit' ? this.data.employee : {};
+        if(this.data.type == 'edit'){
+            this.form = {
+                ...this.data.employee,
+                departmentId: this.data.employee.department?.id
+            };
+        }else{
+            this.form = {};
+        }
         console.log('this.data',this.form);
         this.departmentsList = this.data.departmentsList;
     }
