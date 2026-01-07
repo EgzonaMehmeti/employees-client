@@ -2,25 +2,26 @@
 
 <mat-dialog-content class="dialog-content">
   <p>{{ data?.message || 'Fill the data' }}</p>
+  <form [formGroup]="form">
    <div>
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>First Name</mat-label>
-        <input matInput [(ngModel)]="form.name">
+        <input required matInput formControlName="name">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Last Name</mat-label>
-        <input matInput [(ngModel)]="form.surname">
+        <input matInput formControlName="surname">
     </mat-form-field>
    </div>
    <div>
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Age</mat-label>
-        <input matInput [(ngModel)]="form.age">
+        <input matInput formControlName="age">
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Department</mat-label>
-        <mat-select [(ngModel)]="form.departmentId">
+        <mat-select formControlName="departmentId">
             @for(department of departmentsList; track department){
                 <mat-option [value]="department.id">
                     {{ department.name }}
@@ -31,33 +32,36 @@
    <div>
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Role</mat-label>
-        <input matInput [(ngModel)]="form.role">
+        <input matInput formControlName="role">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Hire Date</mat-label>
-        <input matInput [(ngModel)]="form.hireDate">
+        <input matInput [matDatepicker]="picker" formControlName="hireDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
    </div>
    <div>
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="form.email">
+        <input matInput formControlName="email">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Phone Number</mat-label>
-        <input matInput [(ngModel)]="form.phone">
+        <input matInput formControlName="phone">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
         <mat-label>Salary</mat-label>
-        <input matInput [(ngModel)]="form.salary">
+        <input matInput formControlName="salary">
     </mat-form-field>
    </div>
+   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button matButton="tonal" mat-dialog-close color="primary">Cancel</button>
-  <button color="primary" (click)="save()">Save</button>
+  <button mat-button mat-dialog-close color="primary">Cancel</button>
+  <button mat-button [disabled]="form.invalid" color="primary" (click)="save()">Save</button>
 </mat-dialog-actions>
