@@ -9,20 +9,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { AddEditEmployeeComponent } from '../addEditEmployee/add-edit-employee.component';
+import { AddEditEmployeeComponent } from './addEditEmployee/add-edit-employee.component';
 import { Department } from '../../models/department.model';
+import { FilterEmployeesComponent } from './filterEmployees/filter-employees.component';
+import { EmployeeSearch } from '../../models/employeeSearch.model';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
-  imports: [MatFormFieldModule, MatLabel, MatTableModule, MatPaginatorModule, MatInputModule, MatSortModule, MatButtonModule,
+  imports: [MatFormFieldModule, MatTableModule, MatPaginatorModule, MatInputModule, MatSortModule, MatButtonModule,
             MatIconModule, MatDialogModule
   ]
 })
 export class EmployeeListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'displayName', 'department', 'role', 'actions'];
+  displayedColumns: string[] = ['id', 'displayName', 'department', 'role', 'hireDate', 'actions'];
   dataSource: MatTableDataSource<Employee> = new MatTableDataSource<Employee>();
   departmentsList: Department[] = [];
 
@@ -38,8 +40,8 @@ export class EmployeeListComponent implements OnInit {
     this.loadDepartments();
   }
 
-  loadEmployees(search?: string, department?: string, page: number = 1, pageSize: number = 10) {
-    this.employeeService.getEmployees(search, department, page, pageSize).subscribe(res => {
+  loadEmployees(search?: EmployeeSearch, page: number = 1, pageSize: number = 10) {
+    this.employeeService.getEmployees(search, page, pageSize).subscribe(res => {
       this.dataSource.data = res.items; // assuming paged result has `items` array
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -50,22 +52,30 @@ export class EmployeeListComponent implements OnInit {
       this.departmentsList = res.items; // assuming paged result has `items` array
     });
   }
-
-  applyFilter(event: Event) {
-    const searchValue = (event.target as HTMLInputElement).value;
-
-    this.employeeService.getEmployees(searchValue).subscribe(res => {
-    this.dataSource.data = res.items;
-    });
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  filterEmployees(){
+    var title = 'Filter Employees';
+    var dataForDialog =  {
+      title,
+      departmentsList: this.departmentsList
     }
+    const dialogRef = this.dialog.open(FilterEmployeesComponent, {
+      data: dataForDialog
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if(res){
+        this.employeeService.getEmployees(res).subscribe(res => {
+        this.dataSource.data = res.items;
+        });
+
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+          }
+      }
+    })
   }
 
   public onSortChange() {
     this.loadEmployees(
-      undefined,
       undefined,
       this.paginator.pageIndex + 1,
       this.paginator.pageSize
@@ -75,13 +85,12 @@ export class EmployeeListComponent implements OnInit {
   onPageChange() {
     this.loadEmployees(
       undefined,
-      undefined,
       this.paginator.pageIndex + 1,
       this.paginator.pageSize
     );
   }
 
-  public addEditEmployee(type: string, departmentsList: Department[], employee?: CreateEditEmployee, employeeId?: any){
+  public addEditEmployee(type: string, employee?: CreateEditEmployee, employeeId?: any){
     var title = (type == 'edit') ? 'Edit Employee' : 'Add Employee';
     var message = 'Fill the necessary data';
     var dataForDialog = (type == 'edit') ? {
@@ -89,12 +98,12 @@ export class EmployeeListComponent implements OnInit {
       title,
       message,
       type,
-      departmentsList
+      departmentsList: this.departmentsList
     } : {
       title,
       message,
       type,
-      departmentsList
+      departmentsList: this.departmentsList
     }
     const dialogRef = this.dialog.open(AddEditEmployeeComponent, {
       data: dataForDialog

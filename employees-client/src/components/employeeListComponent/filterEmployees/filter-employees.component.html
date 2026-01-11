@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>{{ data?.title || 'Dialog Title' }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p>{{ data?.message }}</p>
+  <form [formGroup]="form">
+   <div>
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="surname">
+    </mat-form-field>
+   </div>
+   <div>
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="departmentId">
+            @for(department of departmentsList; track department){
+                <mat-option [value]="department.id">
+                    {{ department.name }}
+                </mat-option>}
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Role</mat-label>
+        <input matInput formControlName="role">
+    </mat-form-field>
+   </div>
+   <div>
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Hire Date From</mat-label>
+        <input matInput [matDatepicker]="pickerFrom" formControlName="hireDateFrom">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Hire Date To</mat-label>
+        <input matInput [matDatepicker]="pickerTo" formControlName="hireDateTo">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+   </div>
+   </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="primary">Cancel</button>
+  <button mat-button [disabled]="form.invalid" color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

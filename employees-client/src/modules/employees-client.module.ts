@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { EmployeesClientRoutingModule } from '../routing/employees-client-routing.routing';
-import { AddEditEmployeeComponent } from '../components/addEditEmployee/add-edit-employee.component';
+import { AddEditEmployeeComponent } from '../components/employeeListComponent/addEditEmployee/add-edit-employee.component';
 
 @NgModule({
   declarations: [
