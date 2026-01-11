@@ -19,7 +19,9 @@
         <mat-label>Age</mat-label>
         <input matInput formControlName="age">
     </mat-form-field>
-    <mat-form-field appearance="outline" class="w-full">
+   </div>
+   <div>
+    <mat-form-field appearance="outline" class="w-half">
         <mat-label>Department</mat-label>
         <mat-select formControlName="departmentId">
             @for(department of departmentsList; track department){
@@ -28,18 +30,20 @@
                 </mat-option>}
         </mat-select>
     </mat-form-field>
-   </div>
-   <div>
-    <mat-form-field appearance="outline" class="w-full">
+    <mat-form-field appearance="outline" class="w-half">
         <mat-label>Role</mat-label>
         <input matInput formControlName="role">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full">
+    <mat-form-field appearance="outline" class="w-half">
         <mat-label>Hire Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="hireDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-half">
+        <mat-label>Salary</mat-label>
+        <input matInput formControlName="salary">
     </mat-form-field>
    </div>
    <div>
@@ -53,10 +57,6 @@
         <input matInput formControlName="phone">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Salary</mat-label>
-        <input matInput formControlName="salary">
-    </mat-form-field>
    </div>
    </form>
 </mat-dialog-content>
