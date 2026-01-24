@@ -12,6 +12,7 @@ import { MatButtonModule } from "@angular/material/button";
 @Component({
     selector: 'filter-employees',
     templateUrl: './filter-employees.component.html',
+    standalone: true,
     styleUrls: ['./filter-employees.component.scss'],
     imports: [MatDialogModule, MatFormField, MatLabel, MatInputModule, FormsModule, MatSelectModule, MatButtonModule,
               ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule]

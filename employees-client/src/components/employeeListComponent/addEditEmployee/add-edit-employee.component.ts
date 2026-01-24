@@ -12,6 +12,7 @@ import { MatButtonModule } from "@angular/material/button";
 @Component({
     selector: 'add-edit-employee',
     templateUrl: './add-edit-employee.component.html',
+    standalone: true,
     styleUrls: ['./add-edit-employee.component.scss'],
     imports: [MatDialogModule, MatFormField, MatLabel, MatInputModule, FormsModule, MatSelectModule, MatButtonModule,
               ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule]

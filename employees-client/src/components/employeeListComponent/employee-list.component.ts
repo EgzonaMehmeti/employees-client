@@ -13,14 +13,15 @@ import { AddEditEmployeeComponent } from './addEditEmployee/add-edit-employee.co
 import { Department } from '../../models/department.model';
 import { FilterEmployeesComponent } from './filterEmployees/filter-employees.component';
 import { EmployeeSearch } from '../../models/employeeSearch.model';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
+  standalone: true,
   styleUrls: ['./employee-list.component.scss'],
   imports: [MatFormFieldModule, MatTableModule, MatPaginatorModule, MatInputModule, MatSortModule, MatButtonModule,
-            MatIconModule, MatDialogModule, DatePipe
+            MatIconModule, MatDialogModule, DatePipe, CommonModule
   ]
 })
 export class EmployeeListComponent implements OnInit {
